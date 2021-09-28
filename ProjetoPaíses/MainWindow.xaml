@@ -1,0 +1,542 @@
+﻿<Window x:Class="ProjetoPaíses.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="600"
+        Width="900"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Icon="globe.ico">
+    <Grid Background="#9b59b6">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+        <Image Source="Icons/flagpoleCropped.png"
+               RenderOptions.BitmapScalingMode="Fant"
+               Grid.Row="1" 
+               Margin="270,228,522,20">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                    <SkewTransform AngleY="0" AngleX="0"/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <Grid Background="#611d7d"
+              MouseDown="Grid_MouseDown"
+              Panel.ZIndex="1">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Text="CountryAtlasPro"
+                       x:Name="tb_title"
+                       Foreground="#FF00D2D3"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontFamily="Fonts/#Dosis"
+                       FontWeight="Medium" 
+                       FontSize="16"/>
+            
+            <Image Margin="146,27,10,24"
+                   RenderOptions.BitmapScalingMode="Fant"
+                   Source="/Icons/globeBlue.png" 
+                   Stretch="Fill" 
+                   RenderTransformOrigin="-0.958,0"
+                   Grid.Column="0"/>
+
+            <Button x:Name="btn_home"
+                    Style="{StaticResource specialButtonBlue}"
+                    Content="Home"
+                    FontFamily="Fonts/#Dosis"
+                    FontSize="16"
+                    Foreground="White"
+                    Grid.Column="1" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Width="180" 
+                    Height="75"
+                    Click="btn_home_Click"/>
+            
+            <Button x:Name="btn_game"
+                    Style="{StaticResource specialButtonBlue}"
+                    Content="Game"
+                    FontFamily="Fonts/#Dosis"
+                    FontSize="16"
+                    Foreground="White"
+                    Grid.Column="2" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Width="180" 
+                    Height="75" 
+                    Click="btn_game_Click"/>
+            
+            <Button x:Name="btn_about"
+                    Style="{StaticResource specialButtonBlue}"
+                    Content="About"
+                    FontFamily="Fonts/#Dosis"
+                    FontSize="16"
+                    Foreground="White"
+                    Grid.Column="3" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Width="180" 
+                    Height="75"
+                    Click="btn_about_Click"
+                    Panel.ZIndex="1"/>
+            
+            <Button Grid.Column="4"
+                    x:Name="btn_close"
+                    Width="35"
+                    Height="35" 
+                    Margin="125,16,20,24" 
+                    Click="btn_close_Click"
+                    Style="{StaticResource specialButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Icons/cross2.png"
+                                RenderOptions.BitmapScalingMode="Fant"/>
+                </Button.Background>
+            </Button>
+            
+        </Grid>
+
+        <Grid Background="#611d7d"
+              Grid.Row="3"
+              Panel.ZIndex="1">
+            
+            <ProgressBar x:Name="pb_load" 
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Height="40" 
+                         Margin="192,30,188,30" 
+                         Width="520" 
+                         Grid.Row="2"
+                         Foreground="#FF00D2D3" 
+                         BorderBrush="Transparent" 
+                         Background="#9b59b6"/>
+
+            <Label Grid.Row="2" 
+                   x:Name="lbl_result"
+                   Content="" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Foreground="White"
+                   Width="520" 
+                   FontFamily="./#Dosis" 
+                   Height="40" 
+                   Margin="192,30,188,30"/>
+        </Grid>
+
+        <ComboBox Grid.Row="1" 
+                  x:Name="cb_pais" 
+                  HorizontalAlignment="Left" 
+                  Margin="375,25,0,0" 
+                  VerticalAlignment="Top" 
+                  Width="240" 
+                  SelectionChanged="ComboBox_SelectionChanged" 
+                  IsReadOnly="True" 
+                  IsEnabled="False" 
+                  VerticalContentAlignment="Center" 
+                  Height="30"/>
+
+        <Label Grid.Row="1" 
+               x:Name="lbl_pais" 
+               Content="Country:"  
+               FontFamily="./#Dosis"
+               FontSize="16"
+               Foreground="#FF00D2D3"
+               Height="30"
+               VerticalContentAlignment="Center" 
+               Margin="305,25,525,370"/>
+
+        <Label Grid.Row="1" 
+               x:Name="lbl_capital" 
+               Content="Capital:"  
+               FontFamily="./#Dosis"
+               FontSize="16"
+               Foreground="#FF00D2D3"
+               Height="30"
+               HorizontalContentAlignment="Left"
+               VerticalContentAlignment="Center" 
+               Margin="30,110,809,285" 
+               Width="60"/>
+
+        <Label Grid.Row="1" 
+               x:Name="lbl_nome" 
+               Content="Name:"  
+               FontFamily="./#Dosis"
+               FontSize="16"
+               Foreground="#FF00D2D3"
+               Width="60"
+               Height="30"
+               HorizontalContentAlignment="Left"
+               VerticalContentAlignment="Center" 
+               Margin="30,50,810,345"/>
+
+        <Label Grid.Row="1" 
+               x:Name="lbl_region" 
+               Content="Region:"  
+               FontFamily="./#Dosis"
+               FontSize="16"
+               Foreground="#FF00D2D3"
+               Width="65"
+               Height="30"
+               VerticalContentAlignment="Center" 
+               Margin="645,50,190,345"/>
+
+        <Label Grid.Row="1" 
+               x:Name="lbl_subRegion" 
+               Content="Subregion:"  
+               FontFamily="./#Dosis"
+               FontSize="16"
+               Foreground="#FF00D2D3"
+               Width="90"
+               Height="30"
+               VerticalContentAlignment="Center" 
+               Margin="645,110,165,285"/>
+
+        <Label Grid.Row="1" 
+               x:Name="lbl_gini" 
+               Content="Gini:"  
+               FontFamily="./#Dosis"
+               FontSize="16"
+               Foreground="#FF00D2D3"
+               Width="45"
+               Height="30"
+               VerticalContentAlignment="Center" 
+               Margin="305,80,550,315"/>
+
+        <Label Grid.Row="1" 
+               x:Name="lbl_populacao" 
+               Content="Population:"  
+               FontFamily="./#Dosis"
+               FontSize="16"
+               Foreground="#FF00D2D3"
+               Height="30"
+               VerticalContentAlignment="Center" 
+               Margin="305,130,505,265" 
+               Width="90"/>
+
+        <Grid Height="50"
+              Width="150"
+              x:Name="grid_nomeResultado"
+              Margin="90,41,660,334" 
+              Grid.Row="1">
+            
+            <TextBlock
+                   x:Name="tb_nomeResultado"
+                   Height="auto"
+                   Width="150"
+                   Text=""
+                   FontFamily="./#Dosis"
+                   Foreground="White"
+                   FontSize="14"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"/>
+        </Grid>
+
+        <Grid Height="50"
+              Width="150"
+              x:Name="grid_capitalResultado"
+              Grid.Row="1" 
+              Margin="90,101,660,274">
+            <TextBlock
+                   x:Name="tb_capitalResultado"
+                   Height="auto"
+                   Width="150"
+                   Text=""
+                   FontFamily="./#Dosis"
+                   Foreground="White"
+                   FontSize="14"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"/>
+        </Grid>
+
+        <Grid Height="50"
+              Width="140"
+              x:Name="grid_regiaoResultado"
+              Grid.Row="1" 
+              Margin="710,41,50,334">
+            <TextBlock
+                   x:Name="tb_regiaoResultado"
+                   Height="auto"
+                   Width="140"
+                   Text=""
+                   FontFamily="./#Dosis"
+                   Foreground="White"
+                   FontSize="14"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   />
+        </Grid>
+
+        <Grid Height="50"
+              Width="140"
+              x:Name="grid_subregiaoResultado"
+              Grid.Row="1" 
+              Margin="735,101,25,274">
+            <TextBlock
+                   x:Name="tb_subregiaoResultado"
+                   Height="auto"
+                   Width="140"
+                   Text=""
+                   FontFamily="./#Dosis"
+                   Foreground="White"
+                   FontSize="14"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   />
+        </Grid>
+
+        <Grid Height="40"
+              Width="140"
+              x:Name="grid_giniResultado"
+              Grid.Row="1" 
+              Margin="350,76,410,309">
+            <TextBlock
+                   x:Name="tb_giniResultado"
+                   Height="auto"
+                   Width="140"
+                   Text=""
+                   FontFamily="./#Dosis"
+                   Foreground="White"
+                   FontSize="14"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   />
+        </Grid>
+
+        <Grid Height="40"
+              Width="140"
+              x:Name="grid_populationResultado"
+              Grid.Row="1" 
+              Margin="395,126,365,259">
+            <TextBlock
+                   x:Name="tb_populationResultado"
+                   Height="auto"
+                   Width="140"
+                   Text=""
+                   FontFamily="./#Dosis"
+                   Foreground="White"
+                   FontSize="14"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left" 
+                   Margin="0,12"/>
+        </Grid>
+
+        <Label Grid.Row="1" 
+               x:Name="lbl_loading" 
+               HorizontalAlignment="Left" 
+               Content="Loading..."
+               Margin="375,25,0,0" 
+               VerticalAlignment="Top" 
+               Height="30" 
+               Width="240"
+               VerticalContentAlignment="Center"/>
+
+        <Border BorderBrush="Black"
+                x:Name="border"
+                BorderThickness="0" 
+                HorizontalAlignment="Left" 
+                Height="100" 
+                Margin="120,240,0,0" 
+                VerticalAlignment="Top" 
+                Width="150" 
+                Grid.Row="1">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="7"
+                                  BlurRadius="5"
+                                  Opacity="0.5"/>
+            </Border.Effect>
+            <svgc:SvgViewbox x:Name="svg_flag" 
+                             Stretch="Fill" 
+                             Width="150" 
+                             FlowDirection="RightToLeft" 
+                             ClipToBounds="True" 
+                             EnsureViewboxPosition="True" 
+                             EnsureViewboxSize="True" />
+        </Border>
+
+        <Border>
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="3"
+                                  BlurRadius="5"
+                                  Opacity="0.8"/>
+            </Border.Effect>
+            <Button x:Name="btn_funFact"
+                Content="Fun fact!"
+                Style="{StaticResource specialButton}"
+                Click="btn_funFact_Click"
+                Width="75"
+                Margin="30,355,795,-305"
+                Grid.Row="1"
+                Height="25"
+                FontFamily="/ProjetoPaíses;component/Fonts/#Dosis"
+                FontSize="14"
+                FontWeight="Medium"
+                Foreground="White"
+                Background="#FF00D2D3">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Border>
+
+        <m:Map x:Name="map"
+               CredentialsProvider="IWwimmykYf4rQpkyw9zK~z-rqTWaYLJwlFBPJPNP7qA~AmWnOPksV_ftk5EHsFkgtI9ulJuprE72KC3D8P28_F41bXyDxjU83RCQWTZEhdkL"
+               Margin="375,202,25,23"
+               Grid.Row="1"
+               Width="500"
+               Height="200"
+               Panel.ZIndex="-2">
+            <m:Pushpin x:Name="Pin"
+                       Foreground="White"
+                       Content="PRT"
+                       FontSize="9"
+                       Location="39,-8.0"/>
+        </m:Map>
+
+        <Border>
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="2"
+                                  BlurRadius="5"
+                                  Opacity="0.8"/>
+            </Border.Effect>
+            <Button x:Name="btn_zoomMinus"
+                Content="" 
+                Width="24"
+                Height="24"
+                Margin="340,396,536,-345"
+                Grid.Row="1"
+                Click="btn_zoomMinus_Click"
+                BorderBrush="Transparent"
+                Foreground="White"
+                Style="{StaticResource specialButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="Icons/minus.png"
+                            RenderOptions.BitmapScalingMode="Fant"/>
+                </Button.Background>
+            </Button>
+        </Border>
+
+        <Border>
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="2"
+                                  BlurRadius="5"
+                                  Opacity="0.8"/>
+            </Border.Effect>
+            <Button x:Name="btn_zoomPlus"
+                Content="" 
+                Width="24"
+                Height="24"
+                Margin="340,341,536,-290"
+                Grid.Row="1"
+                Click="btn_zoomPlus_Click"
+                BorderBrush="Transparent"
+                Foreground="White"
+                Style="{StaticResource specialButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="Icons/plus.png"
+                            RenderOptions.BitmapScalingMode="Fant"/>
+                </Button.Background>
+            </Button>
+        </Border>
+
+        <Label x:Name="lbl_zoom"
+               Content="Zoom"
+               FontSize="16"
+               FontFamily="/ProjetoPaíses;component/Fonts/#Dosis"
+               Foreground="White"
+               Margin="325,290,519,100"
+               Grid.Row="1"
+               Width="56"
+               Height="35"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center"/>
+
+        <StackPanel x:Name="sp_stackPanel" 
+                    HorizontalAlignment="Left" 
+                    Height="425" VerticalAlignment="Top" 
+                    Width="900" 
+                    Grid.Row="1">
+        </StackPanel>
+
+        <GroupBox Header="Information"
+                  HorizontalAlignment="Center"
+                  Height="170"
+                  VerticalAlignment="Top" 
+                  Width="870"
+                  Margin="15,5,15,0"
+                  Grid.Row="1"
+                  FontFamily="/ProjetoPaíses;component/Fonts/#Dosis"
+                  FontSize="14"
+                  Foreground="#FF00D2D3"
+                  Panel.ZIndex="-1"/>
+
+        <GroupBox Header="Visual Details"
+                  Width="870"
+                  Margin="15,180,15,10"
+                  Grid.Row="1"
+                  Foreground="#FF00D2D3"
+                  FontFamily="/ProjetoPaíses;component/Fonts/#Dosis"
+                  FontSize="14"
+                  Panel.ZIndex="-1"/>
+
+        <Label Grid.Row="2" 
+               x:Name="lbl_status" 
+               Content="" 
+               HorizontalAlignment="Left"
+               VerticalAlignment="Bottom"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Left"
+               FontSize="14"
+               FontWeight="Light"
+               Foreground="White"
+               Panel.ZIndex="2"
+               FontFamily="Arial" 
+               Height="25"/>
+
+        <Label Content="Coordinates not available"
+               x:Name="lbl_coordinates"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Center"
+               Height="50"
+               Margin="375,284,25,91"
+               Grid.Row="1"
+               Width="500"
+               FontFamily="/ProjetoPaíses;component/Fonts/#Dosis"
+               FontSize="16"
+               Foreground="White"
+               Background="#FF00D2D3"
+               FontWeight="Medium"
+               Panel.ZIndex="-1"/>
+    </Grid>
+    
+</Window>

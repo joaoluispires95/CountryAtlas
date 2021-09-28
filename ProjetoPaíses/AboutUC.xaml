@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="ProjetoPaíses.AboutUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProjetoPaíses"
+             mc:Ignorable="d" 
+             Height="425" 
+             Width="900">
+    <Grid Background="#9b59b6">
+        <Image
+               Height="160"
+               VerticalAlignment="Top"
+               Source="Icons/cinel.png"
+               Margin="370,50,370,0"/>
+        <Label Content="CountryAtlasPro v1.0.1"
+               Margin="300,246,300,139"
+               VerticalAlignment="Center"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center"
+               Height="40"
+               FontFamily="Arial"
+               FontSize="14"
+               FontWeight="Medium" Foreground="White"/>
+        <Label Content="12/07/2021"
+            HorizontalAlignment="Center"
+            Margin="300,286,300,99"
+            VerticalAlignment="Center"
+            Width="300"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Height="40"
+            FontFamily="Arial"
+            FontSize="14"
+            FontWeight="Medium" Foreground="White"/>
+        <Label Content="Developed by João Pires - Cet58"
+            HorizontalAlignment="Center"
+            Margin="300,326,300,59"
+            VerticalAlignment="Center"
+            Width="300"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Height="40"
+            FontFamily="Arial"
+            FontSize="14"
+            FontWeight="Medium" Foreground="White"/>
+    </Grid>
+</UserControl>
